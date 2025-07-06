@@ -1,12 +1,12 @@
 /*
-minha abordadagem foi a criação de um parser, ou seja, um programa que analiza e converte uma string, que no caso, é em operações matematicas validas em C.
-Para utilizar esse codigo voce digita a expressão matemática completa que voce deseja operar,
-você pode também realizar multiplas operações de uma unica vez, veja os exemplos:
-- raiz(144) // para raiz quadrada
-- 1+2+1+5-8 //operações basicas
-- 5^2 // potencia
-assim como na matematica voce pode tambem realizar operações complexas separando escopos com parenteses
-- raiz((3+4+5)/4)
+My approach was to create a parser, that is, a program that analyzes and converts a string into valid mathematical operations in C.
+To use this code, you type the complete mathematical expression you want to operate.
+You can also perform multiple operations at once, see the examples:
+- sqrt(144) // for square root
+- 1+2+1+5-8 //basic operations
+- 5^2 // power
+Just as in mathematics, you can also perform complex operations by separating scopes with parentheses.
+- sqrt((3+4+5)/4)
 -((5*3)^2)/4
 
 */
@@ -16,162 +16,205 @@ assim como na matematica voce pode tambem realizar operações complexas separan
 #include <ctype.h>
 #include <string.h>
 #include <math.h>
+#include <setjmp.h>
 
-// Ponteiro para a expressão de entrada
-const char *entrada;
-// Caractere atual sendo analisado
-char atual;
+jmp_buf error_handler;
 
-// Avança para o próximo caractere na expressão
-void proximo() {
-    atual = *entrada++;
+// Pointer to the input expression
+const char *input;
+// Current character being analyzed
+char current_char;
+
+void skip_whitespace(); // Forward declaration
+
+// Advance to the next character in the expression
+void next_char() {
+    current_char = *input++;
 }
 
-// Declaração antecipada da função principal de avaliação
-double expressao();
+// Forward declaration of the main evaluation function
+double expression();
 
-// Exibe mensagem de erro e encerra o programa
-void erro(const char *mensagem) {
-    printf("Erro: %s\n", mensagem);
-    exit(1);
+// Displays an error message and terminates the program
+void error(const char *message) {
+    printf("Error: %s\n", message);
+    longjmp(error_handler, 1);
 }
 
-// Lê um número da expressão, incluindo parte decimal
-double numero() {
-    double resultado = 0;
-    while (isdigit(atual)) {
-        resultado = resultado * 10 + (atual - '0');
-        proximo();
+// Skips whitespace characters
+void skip_whitespace() {
+    while (isspace(current_char)) {
+        next_char();
+    }
+}
+
+// Reads a number from the expression, including the decimal part
+double number() {
+    double result = 0;
+    while (isdigit(current_char)) {
+        result = result * 10 + (current_char - '0');
+        next_char();
     }
 
-    // Trata parte decimal, se existir
-    if (atual == '.') {
-        proximo();
-        double fracao = 0, divisor = 10;
-        while (isdigit(atual)) {
-            fracao += (atual - '0') / divisor;
+    // Handles the decimal part, if it exists
+    if (current_char == '.') {
+        next_char();
+        double fraction = 0, divisor = 10;
+        while (isdigit(current_char)) {
+            fraction += (current_char - '0') / divisor;
             divisor *= 10;
-            proximo();
+            next_char();
         }
-        resultado += fracao;
+        result += fraction;
     }
 
-    return resultado;
+    return result;
 }
 
-// Função que trata os fatores: chamadas de função (ex: sqrt), parênteses ou números
-double fator();
+// Function that handles factors: function calls (e.g. sqrt), parentheses or numbers
+double base();
 
-// Analisa chamadas de funções como sqrt(...)
-double funcao() {
-    char nome_funcao[10];
+// Parses function calls like sqrt(...)
+double parse_function() {
+    char function_name[10];
     int i = 0;
 
-    // Lê o nome da função (ex: sqrt)
-    while (isalpha(atual) && i < 9) {
-        nome_funcao[i++] = atual;
-        proximo();
+    // Reads the function name (e.g. sqrt)
+    while (isalpha(current_char) && i < 9) {
+        function_name[i++] = current_char;
+        next_char();
     }
-    nome_funcao[i] = '\0';
+    function_name[i] = '\0';
 
-    // Espera que a próxima parte seja um parêntese de abertura
-    if (atual != '(')
-        erro("Esperado '(' após nome de função");
+    skip_whitespace();
 
-    proximo(); // Pula '('
-    double argumento = expressao(); // Avalia o que está dentro dos parênteses
-    if (atual != ')') erro("Esperado ')' após argumento da função");
-    proximo(); // Pula ')'
+    // Expects the next part to be an opening parenthesis
+    if (current_char != '(')
+        error("Expected '(' after function name");
 
-    // Suporta apenas sqrt por enquanto
-    if (strcmp(nome_funcao, "raiz") == 0) return sqrt(argumento);
-    else erro("Função desconhecida");
+    next_char(); // Skip '('
+    double argument = expression(); // Evaluates what is inside the parentheses
+    if (current_char != ')') error("Expected ')' after function argument");
+    next_char(); // Skip ')'
+
+    // Only supports sqrt for now
+    if (strcmp(function_name, "sqrt") == 0) return sqrt(argument);
+    else if (strcmp(function_name, "raiz") == 0) return sqrt(argument); // Keep support for "raiz"
+    else error("Unknown function");
     return 0;
 }
 
-// Retorna o valor de uma base numérica: número, parênteses ou função
+// Returns the value of a numeric base: number, parentheses or function
 double base() {
-    if (isalpha(atual)) {
-        return funcao(); // chama função como sqrt(...)
-    } else if (atual == '(') {
-        proximo();
-        double resultado = expressao(); // avalia subexpressão entre parênteses
-        if (atual != ')') erro("Esperado ')'");
-        proximo();
-        return resultado;
-    } else if (isdigit(atual) || atual == '.') {
-        return numero(); // lê um número (inteiro ou decimal)
+    skip_whitespace();
+    if (isalpha(current_char)) {
+        return parse_function(); // calls function like sqrt(...)
+    } else if (current_char == '(') {
+        next_char();
+        double result = expression(); // evaluates subexpression in parentheses
+        skip_whitespace();
+        if (current_char != ')') error("Expected ')'");
+        next_char();
+        return result;
+    } else if (isdigit(current_char) || current_char == '.') {
+        return number(); // reads a number (integer or decimal)
+    } else if (current_char == '-') { // Handle unary minus
+        next_char();
+        return -base();
     } else {
-        erro("Caractere inesperado em base()");
+        error("Unexpected character in base()");
         return 0;
     }
 }
 
-// Trata operação de potência (exponenciação com ^), associativa à direita
-double potencia() {
-    double esquerda = base();
-    while (atual == '^') {
-        proximo();
-        double direita = potencia(); // potência é associativa à direita
-        esquerda = pow(esquerda, direita);
+// Handles power operation (exponentiation with ^), right-associative
+double power() {
+    double left = base();
+    skip_whitespace();
+    while (current_char == '^') {
+        next_char();
+        double right = power(); // power is right-associative
+        left = pow(left, right);
+        skip_whitespace();
     }
-    return esquerda;
+    return left;
 }
 
-// Trata multiplicação e divisão
-double termo() {
-    double resultado = potencia();
-    while (atual == '*' || atual == '/') {
-        char operador = atual;
-        proximo();
-        double direita = potencia();
-        if (operador == '*') resultado *= direita;
+// Handles multiplication and division
+double term() {
+    double result = power();
+    skip_whitespace();
+    while (current_char == '*' || current_char == '/') {
+        char op = current_char;
+        next_char();
+        double right = power();
+        if (op == '*') result *= right;
         else {
-            if (direita == 0.0) erro("Divisão por zero");
-            resultado /= direita;
+            if (right == 0.0) error("Division by zero");
+            result /= right;
         }
+        skip_whitespace();
     }
-    return resultado;
+    return result;
 }
 
-// Trata adição e subtração
-double expressao() {
-    double resultado = termo();
-    while (atual == '+' || atual == '-') {
-        char operador = atual;
-        proximo();
-        double direita = termo();
-        if (operador == '+') resultado += direita;
-        else resultado -= direita;
+// Handles addition and subtraction
+double expression() {
+    double result = term();
+    skip_whitespace();
+    while (current_char == '+' || current_char == '-') {
+        char op = current_char;
+        next_char();
+        double right = term();
+        if (op == '+') result += right;
+        else result -= right;
+        skip_whitespace();
     }
-    return resultado;
+    return result;
 }
 
-// Função principal do programa
+// Main function of the program
 int main() {
-    char continuar = 'y';
+    char operation[256];
 
-    while(continuar == 'y'){
-   char operacao[256];
+    printf("Enter the expression (or type 'exit' to quit): ");
+    while (fgets(operation, 256, stdin) != NULL) {
+        // Remove newline character from fgets
+        operation[strcspn(operation, "\n")] = 0;
 
-    printf("Digite a expressao: ");
-    scanf("%255s", operacao);
+        // Check for exit condition
+        if (strcmp(operation, "exit") == 0) {
+            break;
+        }
 
-    entrada = operacao;
-    proximo(); // Inicializa com o primeiro caractere
-    double resultado = expressao();
+        if (setjmp(error_handler)) {
+            // Error occurred, loop will continue
+        } else {
+            input = operation;
+            next_char(); // Initialize with the first character
 
-    // Verifica se toda a entrada foi consumida corretamente
-    if (atual != '\0') {
-        printf("Erro: Caractere inesperado '%c'\n", atual);
-        return 1;
+            // Check for empty input
+            skip_whitespace();
+            if (current_char == '\0') {
+                printf("Enter the expression (or type 'exit' to quit): ");
+                continue;
+            }
+
+            double result = expression();
+
+            // Checks if the entire input was consumed correctly
+            skip_whitespace();
+            if (current_char != '\0') {
+                printf("Error: Unexpected character '%c'\n", current_char);
+            } else {
+                // Prints the result
+                printf("Result: %g\n", result);
+            }
+        }
+
+        printf("Enter the expression (or type 'exit' to quit): ");
     }
 
-    // Imprime o resultado com 2 casas decimais
-    printf("Resultado: %.2lf\n", resultado);
-    printf("digite y para continuar ou n para terminar\n");
-    scanf(" %c", &continuar);
-    
-    }
+    printf("\nExiting calculator.\n");
     return 0;
 }
