@@ -23,7 +23,7 @@ jobs:
       - name: Compile
         run: |
           mkdir -p build
-          gcc -O2 -Wall -o build/calculator src/*.c
+          gcc -O2 -Wall -o build/calculator main.c
 
       - name: Package binary
         run: |
