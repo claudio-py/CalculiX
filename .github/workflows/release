@@ -29,8 +29,7 @@ jobs:
 
       - name: Package binary
         run: |
-          tar -C build -czf cCalcApp-${{ github.ref_name }}-linux-amd64.tar.gz linux/main
-          tar -C build -czf cCalcApp-${{ github.ref_name }}-windiws-x86_64.tar.gz windows/main.exe
+          tar -C build -czf calculator-${{ github.ref_name }}-linux-amd64.tar.gz calculator
 
       - name: Create release and upload asset
         uses: softprops/action-gh-release@v2
@@ -38,8 +37,6 @@ jobs:
           tag_name: ${{ github.ref }}                       # the tag that triggered the workflow
           name: Release ${{ github.ref_name }}
           generate_release_notes: true
-          files: | 
-              cCalcApp-${{ github.ref_name }}-linux-amd64.tar.gz
-              cCalcApp-${{ github.ref_name }}-windiws-x86_64.tar.gz
+          files: calculator-${{ github.ref_name }}-linux-amd64.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
