@@ -3,9 +3,8 @@ name: Linux
 on:
   workflow_dispatch:
   push:
-    paths:
-      - 'src/**'
-      - '.github/workflows/linux.yml'
+    tags:
+      - 'v*'  # Trigger only on version-style tags (e.g., v1.0.0)
   release:
     types: [published]
     
