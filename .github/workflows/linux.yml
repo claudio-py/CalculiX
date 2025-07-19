@@ -83,4 +83,3 @@ jobs:
         files: ${{ env.PROJECT_RELEASE_PATH }}.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      # if: github.event_name == 'release' && github.event.action == 'published'

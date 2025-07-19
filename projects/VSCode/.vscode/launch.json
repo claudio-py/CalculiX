@@ -8,7 +8,7 @@
             "name": "Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/main",
+            "program": "${workspaceFolder}/calculix",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -42,10 +42,10 @@
             "cwd": "${workspaceFolder}",
             "environment": [],
             "externalConsole": false,
-            "program": "${workspaceFolder}/main",
+            "program": "${workspaceFolder}/calculix",
             "MIMode": "gdb",
             "windows": {
-              "program": "${workspaceFolder}/main.exe",
+              "program": "${workspaceFolder}/calculix.exe",
               "miDebuggerPath": "C:\raylib\w64devkit\bin/gdb.exe"
             },
             "osx": {

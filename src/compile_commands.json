@@ -1,7 +1,7 @@
 [
   {
-    "directory": "/home/archlaud/gitclones/raylib-project-creator",
-    "command": "gcc -c main.c -o main.o -std=c99 -Wall -Wno-missing-braces -Wno-unused-value -Wno-pointer-sign -D_DEFAULT_SOURCE -s -O2 -I. -Iexternal -I/home/archlaud/gitclones/raylib/src/ -DPLATFORM_DESKTOP",
-    "file": "main.c"
+    "directory": "/home/archlaud/Documents/projects/CalculiX2/",
+    "command": "gcc -c calculix.c -o calculix.o -std=c99 -Wall -Wno-missing-braces -Wno-unused-value -Wno-pointer-sign -D_DEFAULT_SOURCE -s -O2 -I. -Iexternal -I/home/archlaud/gitclones/raylib/src/ -DPLATFORM_DESKTOP",
+    "file": "calculix.c"
   }
 ]

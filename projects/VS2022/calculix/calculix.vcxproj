@@ -37,10 +37,10 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0981CA98-E4A5-4DF1-987F-A41D09131EFC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>main</RootNamespace>
-    <ProjectName>main</ProjectName>
+    <RootNamespace>calculix</RootNamespace>
+    <ProjectName>calculix</ProjectName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <RaylibSrcPath>/home/archlaud/Documents/projects</RaylibSrcPath>
+    <RaylibSrcPath>~/gitclones/raylib/src</RaylibSrcPath>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -353,12 +353,12 @@
     <!--Additional Include Items-->
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\main.c" />
+    <ClCompile Include="..\..\..\src\calculix.c" />
     <!--Additional Compile Items-->
     <!--<ClCompile Include="..\..\..\src\extra_module.c" />-->
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\..\..\src\main.rc" />
+    <ResourceCompile Include="..\..\..\src\calculix.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

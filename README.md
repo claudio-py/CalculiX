@@ -1,8 +1,8 @@
-## thermiX
+## CalculiX
 
 ### Description
 
-temperature conveter
+Calculator
 
 ### Features
 

@@ -7,17 +7,17 @@ cd %~dp0
 :: .
 :: > Compile simple .rc file
 :: ----------------------------
-cmd /c windres ..\..\src\main.rc -o ..\..\src\main.rc.data
+cmd /c windres ..\..\src\calculix.rc -o ..\..\src\calculix.rc.data
 :: .
 :: > Generating project
 :: --------------------------
 cmd /c mingw32-make -f ..\..\src\Makefile ^
-PROJECT_NAME=main ^
+PROJECT_NAME=calculix ^
 PROJECT_VERSION=1.0 ^
-PROJECT_DESCRIPTION="temperature conveter" ^
-PROJECT_INTERNAL_NAME=main ^
+PROJECT_DESCRIPTION="Calculator" ^
+PROJECT_INTERNAL_NAME=calculix ^
 PROJECT_PLATFORM=PLATFORM_DESKTOP ^
-PROJECT_SOURCE_FILES="main.c" ^
+PROJECT_SOURCE_FILES="calculix.c" ^
 BUILD_MODE="RELEASE" ^
 BUILD_WEB_ASYNCIFY=FALSE ^
 BUILD_WEB_MIN_SHELL=TRUE ^

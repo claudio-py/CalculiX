@@ -4,7 +4,7 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/home/archlaud/Documents/projects/**",
+                "~/gitclones/raylib/src/**",
                 "../../src"
             ],
             "defines": [
@@ -23,7 +23,7 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/home/archlaud/Documents/projects/**",
+                "~/gitclones/raylib/src/**",
                 "../../src/"
             ],
             "defines": [
@@ -45,7 +45,7 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/home/archlaud/Documents/projects/**",
+                "~/gitclones/raylib/src/**",
                 "../../src/"
             ],
             "defines": [

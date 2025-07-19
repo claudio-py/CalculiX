@@ -5,15 +5,15 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
-	<string>main</string>
+	<string>calculix</string>
 	<key>CFBundleIconFile</key>
-	<string>main.icns</string>
+	<string>calculix.icns</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.claudio.main</string>
+	<string>com.claudio.calculix</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>thermiX</string>
+	<string>CalculiX</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleVersion</key>

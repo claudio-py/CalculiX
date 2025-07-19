@@ -146,6 +146,7 @@ static void Button018() { strcat(boxText, "^"); }
 static void Button020() { strcat(boxText, "/"); }
 static void Button004() { strcat(boxText, "."); }
 
+
 //farenheight para celcius
 static void Button019() { strcpy(boxText,fahrenheit_to_celsius(boxText) ); }
 

@@ -10,24 +10,24 @@
             "args": [
                 "PLATFORM=PLATFORM_DESKTOP",
                 "BUILD_MODE=DEBUG",
-                "PROJECT_NAME=main",
-                "OBJS=main.c"
+                "PROJECT_NAME=calculix",
+                "OBJS=calculix.c"
             ],
             "windows": {
                 "command": "mingw32-make.exe",
                 "args": [
                     "-f ../../src/Makefile",
                     "RAYLIB_SRC_PATH=C:/raylib/raylib",
-                    "PROJECT_NAME=main",
-                    "OBJS=main.c",
+                    "PROJECT_NAME=calculix",
+                    "OBJS=calculix.c",
                     "BUILD_MODE=DEBUG"
                 ],
             },
             "osx": {
                 "args": [
                     "RAYLIB_SRC_PATH=C:/raylib/raylib",
-                    "PROJECT_NAME=main",
-                    "OBJS=main.c",
+                    "PROJECT_NAME=calculix",
+                    "OBJS=calculix.c",
                     "BUILD_MODE=DEBUG"
                 ],
             },
@@ -42,23 +42,23 @@
             "command": "make",
             "args": [
                 "PLATFORM=PLATFORM_DESKTOP",
-                "PROJECT_NAME=main",
-                "OBJS=main.c"
+                "PROJECT_NAME=calculix",
+                "OBJS=calculix.c"
             ],
             "windows": {
                 "command": "mingw32-make.exe",
                 "args": [
                     "-f ../../src/Makefile",
-                    "RAYLIB_SRC_PATH=/home/archlaud/Documents/projects",
-                    "PROJECT_NAME=main",
-                    "OBJS=main.c"
+                    "RAYLIB_SRC_PATH=~/gitclones/raylib/src",
+                    "PROJECT_NAME=calculix",
+                    "OBJS=calculix.c"
                 ],
             },
             "osx": {
                 "args": [
-                    "RAYLIB_SRC_PATH=/home/archlaud/Documents/projects",
-                    "PROJECT_NAME=main",
-                    "OBJS=main.c"
+                    "RAYLIB_SRC_PATH=~/gitclones/raylib/src",
+                    "PROJECT_NAME=calculix",
+                    "OBJS=calculix.c"
                 ],
             },
             "group": "build",
