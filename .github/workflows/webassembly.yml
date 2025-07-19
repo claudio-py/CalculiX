@@ -3,9 +3,8 @@ name: WebAssembly
 on:
   workflow_dispatch:
   push:
-    paths:
-      - 'src/**'
-      - '.github/workflows/webassembly.yml'
+    tags:
+      - 'v*'  # Trigger only on version-style tags (e.g., v1.0.0)
   release:
     types: [published]
     
@@ -88,4 +87,4 @@ jobs:
         files: ${{ env.PROJECT_RELEASE_PATH }}.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      if: github.event_name == 'release' && github.event.action == 'published'
+      # if: github.event_name == 'release' && github.event.action == 'published'
