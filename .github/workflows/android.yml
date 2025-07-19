@@ -43,10 +43,13 @@ jobs:
       shell: bash
       if: github.event_name == 'release' && github.event.action == 'published'
     
-    - name: Setup Environment
-      run: | 
+    - name: Install dependencies
+      run: |
         sudo apt-get update -qq
         sudo apt-get install -y --no-install-recommends openjdk-11-jdk unzip wget make
+
+    - name: Setup Android SDK
+      run: |
         wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
         unzip cmdline-tools.zip -d $HOME/android-sdk
         export ANDROID_SDK_ROOT=$HOME/android-sdk
