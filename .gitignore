@@ -69,4 +69,4 @@ compile_commands.json
 
 # Android
 *apk*
-android.*
+# android.*
