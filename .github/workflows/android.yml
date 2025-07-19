@@ -59,11 +59,15 @@ jobs:
         mkdir ${{ env.PROJECT_RELEASE_PATH }}
         ls
       shell: bash
-        
+    - name: Debug Make Availability
+      run: |
+        which make
+        ls -l /usr/bin/make
+        echo $PATH    
     - name: Build raylib Library for Android
       run: |
         cd raylib/src
-        make PLATFORM=PLATFORM_ANDROID RAYLIB_LIBTYPE=STATIC ANDROID_NDK=$HOME/android-sdk/ndk/25.2.9519653 -B
+        /usr/bin/make PLATFORM=PLATFORM_ANDROID RAYLIB_LIBTYPE=STATIC ANDROID_NDK=$HOME/android-sdk/ndk/25.2.9519653 -B
       env:
         ANDROID_SDK_ROOT: $HOME/android-sdk
         PATH: ${{ env.PATH }}:$HOME/android-sdk/cmdline-tools/bin
