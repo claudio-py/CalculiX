@@ -15,7 +15,7 @@ TOOLCHAIN := $(ANDROID_NDK)/toolchains/llvm/prebuilt/linux-x86_64/bin
 CC := $(TOOLCHAIN)/aarch64-linux-android$(ANDROID_API)-clang
 
 CFLAGS := -Wall -std=c99
-LDLIBS := -llog -landroid -lEGL -lGLESv2 -lm
+LDLIBS := -lraylib -llog -landroid -lEGL -lGLESv2 -lm
 
 
 $(PROJECT_BUILD_PATH)/$(PROJECT_NAME): $(OBJS)
