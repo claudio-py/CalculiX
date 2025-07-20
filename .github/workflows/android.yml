@@ -92,7 +92,7 @@ jobs:
         ls 
         ls ../
         echo ${{ env.PROJECT_NAME }}
-        cd ${{ env.PROJECT_BUILD_PATH }}
+        cd ${{ env.PROJECT_BUILD_PATH }}/src
         make PLATFORM=PLATFORM_ANDROID BUILD_MODE=RELEASE PROJECT_CUSTOM_FLAGS=${{ env.PROJECT_CUSTOM_FLAGS }} PROJECT_BUILD_PATH=. RAYLIB_SRC_PATH=../../raylib/src ANDROID_NDK=$ANDROID_NDK_HOME
       shell: bash
     - name: Debug clang availability
@@ -102,7 +102,7 @@ jobs:
     - name: Generate Artifacts
       run: |
         ls ${{ env.PROJECT_BUILD_PATH }}
-        cp ${{ env.PROJECT_BUILD_PATH }}/*.apk ${{ env.PROJECT_RELEASE_PATH }} || true
+        cp ${{ env.PROJECT_BUILD_PATH }}/${{ env.PROJECT_NAME }} || true
         cp -r ${{ env.PROJECT_NAME }}/${{ env.PROJECT_RESOURCES_PATH }} ${{ env.PROJECT_RELEASE_PATH }} || true
         cp ${{ env.PROJECT_NAME }}/README.md ${{ env.PROJECT_RELEASE_PATH }} || true
         cp ${{ env.PROJECT_NAME }}/LICENSE ${{ env.PROJECT_RELEASE_PATH }} || true
