@@ -323,6 +323,7 @@ ifeq ($(PLATFORM),PLATFORM_ANDROID)
     MAKEFILE_TARGET = -f Makefile.Android
     export PROJECT_NAME
     export PROJECT_SOURCE_FILES
+    export RAYLIB_INCLUDE_PATH
 else
     MAKEFILE_TARGET = $(PROJECT_NAME)
 endif
