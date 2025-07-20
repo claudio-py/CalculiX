@@ -7,6 +7,7 @@ test:
 	$(info PROJECT_NAME = $(PROJECT_NAME))
 	$(info PROJECT_BUILD_PATH = $(PROJECT_BUILD_PATH))
 	$(info RAYLIB_SRC_PATH = $(RAYLIB_SRC_PATH))
+	$(info RAYLIB_SRC_PATH = $(RAYLIB_INCLUDE_PATH))
 
 # Android toolchain setup
 ANDROID_API ?= 29
@@ -18,7 +19,7 @@ CFLAGS := -Wall -std=c99
 LDFLAGS :=
 LDLIBS := -llog -landroid -lEGL -lGLESv2 -lm
 
-INCLUDE_PATHS := -I$(RAYLIB_SRC_PATH) -I$(RAYLIB_SRC_PATH)/external
+INCLUDE_PATHS += -I. -Iexternal -I$(RAYLIB_INCLUDE_PATH) 
 
 OBJS := $(patsubst %.c, %.o, $(PROJECT_SOURCE_FILES))
 
