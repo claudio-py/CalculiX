@@ -6,8 +6,7 @@ test:
 	$(info PROJECT_SOURCE_FILES = $(PROJECT_SOURCE_FILES))
 	$(info PROJECT_NAME = $(PROJECT_NAME))
 	$(info PROJECT_BUILD_PATH = $(PROJECT_BUILD_PATH))
-	$(info RAYLIB_SRC_PATH = $(RAYLIB_SRC_PATH))
-	$(info RAYLIB_SRC_PATH = $(RAYLIB_INCLUDE_PATH))
+	$(info INCLUDE_PATHS = $(INCLUDE_PATHS))
 
 # Android toolchain setup
 ANDROID_API ?= 29
@@ -16,12 +15,7 @@ TOOLCHAIN := $(ANDROID_NDK)/toolchains/llvm/prebuilt/linux-x86_64/bin
 CC := $(TOOLCHAIN)/aarch64-linux-android$(ANDROID_API)-clang
 
 CFLAGS := -Wall -std=c99
-LDFLAGS :=
 LDLIBS := -llog -landroid -lEGL -lGLESv2 -lm
-
-INCLUDE_PATHS += -I. -Iexternal -I$(RAYLIB_INCLUDE_PATH) 
-
-OBJS := $(patsubst %.c, %.o, $(PROJECT_SOURCE_FILES))
 
 
 $(PROJECT_BUILD_PATH)/$(PROJECT_NAME): $(OBJS)
