@@ -90,9 +90,10 @@ jobs:
         export PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin:$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin"
         pwd
         ls 
+        ls ../
         echo ${{ env.PROJECT_NAME }}
-        cd ${{ env.PROJECT_NAME }}/src
-        make PLATFORM=PLATFORM_ANDROID BUILD_MODE=RELEASE PROJECT_CUSTOM_FLAGS=${{ env.PROJECT_CUSTOM_FLAGS }} PROJECT_BUILD_PATH=. RAYLIB_SRC_PATH=../raylib/src ANDROID_NDK=$ANDROID_NDK_HOME
+        cd ${{ env.PROJECT_BUILD_PATH }}
+        make PLATFORM=PLATFORM_ANDROID BUILD_MODE=RELEASE PROJECT_CUSTOM_FLAGS=${{ env.PROJECT_CUSTOM_FLAGS }} PROJECT_BUILD_PATH=. RAYLIB_SRC_PATH=../../raylib/src ANDROID_NDK=$ANDROID_NDK_HOME
       shell: bash
     - name: Debug clang availability
       run: |
