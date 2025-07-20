@@ -20,7 +20,7 @@ jobs:
     
     env:
       PROJECT_NAME: ${{ github.event.repository.name }}
-      PROJECT_BUILD_PATH: ${{ github.event.repository.name }}/android_build
+      PROJECT_BUILD_PATH: ${{ github.event.repository.name }}/src
       PROJECT_RELEASE_PATH: ${{ github.event.repository.name }}_dev_android
       PROJECT_CUSTOM_FLAGS: ""
       PROJECT_RESOURCES_PATH: resources
@@ -46,8 +46,7 @@ jobs:
     - name: Install dependencies
       run: |
         sudo apt-get update -qq
-        sudo apt-get install -y --no-install-recommends openjdk-11-jdk unzip wget make
-
+        sudo apt-get install -y coreutils findutils util-linux openjdk-11-jdk unzip wget make coreutils util-linux bash
     - name: Setup Android SDK
       run: |
         wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip -O cmdline-tools.zip
@@ -55,10 +54,25 @@ jobs:
         export ANDROID_SDK_ROOT=$HOME/android-sdk
         export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin
         yes | $ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT --licenses || true
-        $ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-30" "build-tools;30.0.3" "ndk;25.2.9519653"
+        $ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-30" "build-tools;30.0.3" --sdk_root=$ANDROID_SDK_ROOT "platform-tools" "platforms;android-30" "build-tools;30.0.3" "ndk;25.2.9519653"
         mkdir ${{ env.PROJECT_RELEASE_PATH }}
         ls
       shell: bash
+    - name: Debug NDK Installation
+      run: |
+        echo "NDK dir:"
+        ls -l $HOME/android-sdk/ndk
+        echo "Toolchain dir:"
+        ls -l $HOME/android-sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt
+        echo "Target clang:"
+        ls -l $HOME/android-sdk/ndk/25.2.9519653/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android29-clang || echo "clang wrapper not found"
+    - name: Confirm required tools
+      run: |
+        export ANDROID_NDK_HOME=$HOME/android-sdk/ndk/25.2.9519653
+        for cmd in dirname uname whoami bash; do
+          command -v $cmd || echo "$cmd not found"
+        done
+        head -n 5 $ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android29-clang
     - name: Debug Make Availability
       run: |
         which make
@@ -68,18 +82,22 @@ jobs:
       run: |
         cd raylib/src
         /usr/bin/make PLATFORM=PLATFORM_ANDROID RAYLIB_LIBTYPE=STATIC ANDROID_NDK=$HOME/android-sdk/ndk/25.2.9519653 -B
-      env:
-        ANDROID_SDK_ROOT: $HOME/android-sdk
-        PATH: ${{ env.PATH }}:$HOME/android-sdk/cmdline-tools/bin
-    
+      shell: bash
     - name: Build Product (Android)
       run: |
-        cd ${{ env.PROJECT_NAME }}/src
-        make -f Makefile.android PROJECT_CUSTOM_FLAGS=${{ env.PROJECT_CUSTOM_FLAGS }} PROJECT_BUILD_PATH=../android_build RAYLIB_SRC_PATH=../../raylib/src ANDROID_NDK=$HOME/android-sdk/ndk/25.2.9519653
-      env:
-        ANDROID_SDK_ROOT: $HOME/android-sdk
-        PATH: ${{ env.PATH }}:$HOME/android-sdk/cmdline-tools/bin
-    
+        export ANDROID_SDK_ROOT=$HOME/android-sdk
+        export ANDROID_NDK_HOME=$HOME/android-sdk/ndk/25.2.9519653
+        export PATH="$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin:$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin"
+        pwd
+        ls 
+        echo ${{ env.PROJECT_NAME }}
+        cd ./src
+        make PLATFORM=PLATFORM_ANDROID PROJECT_CUSTOM_FLAGS=${{ env.PROJECT_CUSTOM_FLAGS }} PROJECT_BUILD_PATH=. RAYLIB_SRC_PATH=../../raylib/src ANDROID_NDK=$ANDROID_NDK_HOME
+      shell: bash
+    - name: Debug clang availability
+      run: |
+        ls $ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin
+        which clang || true   
     - name: Generate Artifacts
       run: |
         ls ${{ env.PROJECT_BUILD_PATH }}
