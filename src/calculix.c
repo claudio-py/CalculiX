@@ -17,7 +17,7 @@
 #define RAYGUI_IMPLEMENTATION
 #include "external/raygui.h"
 #include <string.h>
-#include "external/backend.h"
+#include "external/calculator.h"
 #include "external/converter.h"
 
 //----------------------------------------------------------------------------------
@@ -107,7 +107,7 @@ int main() {
     if (GuiButton((Rectangle){270,360,90, 72}, "/")) Button020();
     if (GuiButton((Rectangle){0, 432, 120, 72}, "=")) Button021();
     if (GuiButton((Rectangle){120, 432, 120, 72}, "Clear")) Button023();
-    if (GuiButton((Rectangle){240, 432, 120, 72}, "< back")) Button022();
+    if (GuiButton((Rectangle){240, 432, 120, 72}, "< Back")) Button022();
     //----------------------------------------------------------------------------------
 
     EndDrawing();
@@ -141,7 +141,7 @@ static void Button013() { strcat(boxText, "0"); }
 static void Button014() { strcat(boxText, "("); }
 static void Button015() { strcat(boxText, ")"); }
 static void Button016() { strcat(boxText, "*"); }
-static void Button017() { strcat(boxText, "sqrt"); }
+static void Button017() { strcat(boxText, "r("); }
 static void Button018() { strcat(boxText, "^"); }
 static void Button020() { strcat(boxText, "/"); }
 static void Button004() { strcat(boxText, "."); }

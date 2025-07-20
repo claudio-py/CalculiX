@@ -1,7 +1,7 @@
 
-#ifndef BACKEND_H
+#ifndef CALCULATOR_H
 
-#define BACKEND_H
+#define CALCULATOR_H
 
 /*
 esta calculadora trata se de um parser, ou seja, um programa que analisa e converte
@@ -102,11 +102,9 @@ double parse_function() {
     error("Esperado ')' após o argumento da função");
   next_char(); // Pula ')'
 
-  // Suporta apenas sqrt por enquanto
-  if (strcmp(function_name, "sqrt") == 0)
+//aceita reconhece r como substituto para funcao sqrt
+  if (strcmp(function_name, "r") == 0)
     return sqrt(argument);
-  else if (strcmp(function_name, "raiz") == 0)
-    return sqrt(argument); // Suporte para "raiz"
   else
     error("Função desconhecida");
   return 0;
