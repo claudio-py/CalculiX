@@ -49,7 +49,7 @@ COMPILER_PATH         ?= C:\raylib\w64devkit\bin
 BUILD_MODE            ?= RELEASE
 
 # PLATFORM_WEB: Default properties
-BUILD_WEB_ASYNCIFY    ?= FALSE
+BUILD_WEB_ASYNCIFY    ?= TRUE
 BUILD_WEB_SHELL       ?= minshell.html
 BUILD_WEB_HEAP_SIZE   ?= 128MB
 BUILD_WEB_STACK_SIZE  ?= 1MB
