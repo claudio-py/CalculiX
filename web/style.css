@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-fon-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0px;
+  overflow: hidden;
+  background-color: black;
+  /* border: 1px solid red; */
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+div {
+  width: 100%;
+  height: auto;
+  /* margin-right: -15px; */
+}
+
+canvas.emscripten {
+  border: 0px none;
+  background-color: black;
+  display: flex;
+  /* border: 3px solid red; */
+  width: 100%;
+  height: 100%;
+  /* clip-path: inset(0px 10px 10px 0px); */
+}
