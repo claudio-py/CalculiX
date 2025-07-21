@@ -63,27 +63,27 @@
     <p id="output" />
   </div>
   <script>
-    var Module = {
-      print: (function () {
-        var element = document.getElementById('output');
-        if (element) element.value = ''; // clear browser cache
-        return function (text) {
-          if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-          console.log(text);
-          if (element) {
-            element.value += text + "\n";
-            element.scrollTop = element.scrollHeight; // focus on bottom
-          }
-        };
-      })(),
-      canvas: (function () {
-        var canvas = document.getElementById('canvas');
-        return canvas;
-      })()
+var Module = {
+  print: (function () {
+    var element = document.getElementById('output');
+    if (element) element.value = '';
+    return function (text) {
+      if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+      console.log(text);
+      if (element) {
+        element.value += text + "\n";
+        element.scrollTop = element.scrollHeight;
+      }
     };
+  })(),
+  canvas: (function () {
+    var canvas = document.getElementById('canvas');
+    console.log(canvas,"hello world");
+    return canvas;
+})()
+};
   </script>
   <script async type="text/javascript" src="CalculiX.js"></script>
 </body>
 
 </html>
-

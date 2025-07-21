@@ -21,6 +21,7 @@ body {
 div {
   width: 100%;
   height: auto;
+  border: 3px solid red;
   /* margin-right: -15px; */
 }
 
@@ -30,6 +31,6 @@ canvas.emscripten {
   display: flex;
   /* border: 3px solid red; */
   width: 100%;
-  height: 100%;
+  height: auto;
   /* clip-path: inset(0px 10px 10px 0px); */
 }
