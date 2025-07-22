@@ -6,12 +6,12 @@
 /*
 esta calculadora trata se de um parser, ou seja, um programa que analisa e converte
 uma string em operações matemáticas válidas em C.  veja os exemplos:
-- sqrt(144) // para raiz quadrada
+- r(144) // para raiz quadrada
 - 1+2+1+5-8 // operações básicas
 - 5^2 // potência
 Assim como na matemática, você pode realizar operações complexas separando
 escopos com parênteses.
-- sqrt((3+4+5)/4)
+- r((3+4+5)/4)
 -((5*3)^2)/4
 
 */
@@ -22,10 +22,12 @@ escopos com parênteses.
 #include <setjmp.h>
 #include <string.h>
 
+// Buffer para manipulação de erros
 jmp_buf error_handler;
 
 // Ponteiro para a expressão de entrada
 const char *input;
+
 // Caractere atual sendo analisado
 char current_char;
 
