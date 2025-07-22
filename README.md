@@ -2,36 +2,26 @@
 
 ### Description
 
-Calculator
+CalculiX is a multi-platform calculator, available for macOS, Windows, Linux, Web, and Android. It is extremely efficient, lightweight, and runs natively in any environment, showcasing the full power of C.
+The CalculiX calculator receives input data from the user as a string through a graphical interface. To return the result, the string passes through a chain of functions that, when analyzed individually, are simple, but together form a true production line that is, in a way, complex.
+Each character in the analyzed string is passed through a conditional structure so that the program can identify the character and convert the entire string into a valid mathematical operation in C using the <math.h> library. The result is then obtained, converted back into a string, and returned to the graphical interface.
 
 ### Features
 
- - $(Project Feature 01)
- - $(Project Feature 02)
- - $(Project Feature 03)
+ -  Basic math operations 
+ -  converts farenheit to celcius 
 
 ### Controls
 
-Keyboard/Mouse:
- - $(Project Controls 01)
- - $(Project Controls 02)
- - $(Project Controls 03)
+ - Just hit the buttons 
 
 ### Screenshots
-
-_TODO: Show your game to the world, animated GIFs recommended!._
-
-### Developers
-
- - $(Developer 01) - $(Role/Tasks Developed)
- - $(Developer 02) - $(Role/Tasks Developed)
- - $(Developer 03) - $(Role/Tasks Developed)
-
+- <img src="assets/over.png">
+- <img src="assets/dep.png">
+- <img src="assets/algo.png">
 ### Links
 
- - YouTube Gameplay: $(YouTube Link)
- - itch.io Release: $(itch.io Game Page)
- - Steam Release: $(Steam Game Page)
+ - [Raylib](https://github.com/raysan5/raylib)
 
 ### License
 
